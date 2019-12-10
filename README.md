@@ -31,7 +31,7 @@ import axios from 'axios'
 Vue.prototype.$http = axios;
 接下来就各个页面的每个组件都可以用this直接访问$http发起ajax请求了
 2. 设置请求根路径 以后便可以直接在后面写接口地址了
-axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://49.235.242.56:8888/api/private/v1/'
 3. 根据发起请求后得到一个Promise，为了简化，用async和await，因为await只能用在被async修饰的方法中，所以要把await外面的箭头函数修饰成异步，这样可以直接拿到服务器返回的meta数据，根据状态码判定登录是否成功
 ## 弹框提示
 1. element  UI弹框提示
@@ -40,3 +40,47 @@ Vue.prototype.$message = Message
 这个message需要全局挂载，$message自定义属性，可以改名字合法就行，
 后面不能改，意思是把弹窗组件挂载到了Vue的原型对象上，这样每个组件都可以
 通过this访问到$message，进行弹框提示
+3. 使用this.$message.error('登录失败!')
+
+## 登录成功后的操作行为
+1. 将成功后的token，保存到客户端的window.sessionStorage.serItem()中
++ 项目中除了登录之外的API接口，必须在登录之后才能访问
++ token只应在当前网站打开期间生效，所以将token保存在sessionStorage中
+2. 通过编程式导航跳转到后台主页，路由地址为'/home'
+
+## 路由导航守卫控制访问权限
+1. 分析需求：当成功登录后跳转到/home，当我们把token清除，重新刷新页面
+ 发现依旧能访问到/home.因此需要路由导航守卫：
+如果用户没有登录，但是直接通过特定的URL访问特定页面，需要重新导航到登录页面
+
+## 退出
+1. 分析原理：只需要销毁本地的token即可，这样后续的请求就不会携带token，得重新生成一个新的token才能访问页面
+2. 方法：window.sessionStorage.clear()
+    this.$router.push('/login')
+
+## 第二模块 主页布局
+## element-ui快速布局
+1. header 区域布局
+分析：左右布局，左边是logo和文字，右边是退出按钮，flex布局
+内部span文字区域和左边被div包裹，为了让文字居中，给div也设置flex布局即可
+2. 左侧菜单布局
+通过接口，获取菜单数据
+方法：通过axios请求拦截器添加token，保证拥有获取数据的权限
+需要授权的 API ，必须在请求头中使用 `Authorization` 字段提供 `token` 令牌
++ 通过2层v-for循环，将左侧菜单结构渲染出来哦
++ 左侧菜单格式美化
+3. 左侧菜单折叠与展开
+如何让侧边栏的总体宽度也变小
+`<el-aside :width="isCollapse ? '64px' : '200px' ">`
+判断，当侧边栏菜单内容折叠时，让侧边栏总体宽度也变小，扩展时变大
+
+
+## 第三模块 路由
+1. 实现首页路由重定向
+2. 将左侧菜单改造为路由链接
+在el-menu 中开启:router="true"或者router，模式
+启用该模式会在激活导航时以 index 作为 path 进行路由跳转
+在二级菜单处调用，因为path唯一，但是纯字符串，路由跳转必须以'/'开头
+因此拼接一个路由地址el-menu-item :index="'/' + subItem.path"
+
+## 第四模块 用户管理
