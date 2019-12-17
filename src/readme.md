@@ -241,4 +241,27 @@ getHalfCheckedKeys	若节点可被选择（即 show-checkbox 为 true），则�
 vue-table-with-tree-grid
 npm i vue-table-with-tree-grid -S
 import TreeTable from 'vue-table-with-tree-grid'
-Vue.component('tree-table, TreeTable)
+Vue.component(tree-table, TreeTable)
+具体用法，网站有写
+5. 自定义插槽，做自定义渲染。如果cate_delete为true时是对钩，为false时为错。用2个图标显示，v-if判断状态值，对就是对钩，错就是错圈
+6. 排序和操这两列
+7. 商品分类的分页效果
+首先在页面中渲染分页的页码条 el-ui page分页el-pagination
+8. 添加分类操作
+点击添加分类按钮，出现1个对话框，对话框里有2个带有验证规则的表单项，第一个是分类名称，第二个是父级分类，它是个选择框
+9. 渲染父级分类，ui组件中的级联选择器
+10. 添加分类的表单数据
+分析，当只输入名称不选择分类时，那么addCateForm这个添加分类表单数据对象里的三个值
+应该分别为名称，0和0，它是一级分类
+如果选择了二级分类，那么它就是名称。1和1.
+如果选择了三级分类，那么就是3 和2
+因此要给选中项做判断，如果selectedKeys数组中的length大于0，则证明选中了父级分类
+反之没有选中任何父级分类
+父级分类的id
+11. 添加分类对话框关闭事件
+清空对话框
+先给对话框绑定一个close事件，然后拿到ref引用，this.$refs.addCateFormRef.resetFields()
+注意这样只能清空表单，但是无法清空级联选择器中的内容，应该把这个也清空
+清空数组和表单对象里的内容也清空
+12. 点击确定事件
+对表单进行预验证，通过后就发起请求，添加新的分类

@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 //导入全局样式表
 import './assets/css/global.css'
+import TreeTable from 'vue-table-with-tree-grid'
 //导入字体图标
 import './assets/fonts/iconfont.css'
 //安装axios
@@ -19,10 +20,11 @@ axios.interceptors.request.use(config => {
 })
 Vue.prototype.$http = axios;
 
+
 Vue.config.productionTip = false
 //完整引入elementui
 // import ElementUI from 'element-ui' //引入js
-// import 'element-ui/lib/theme-chalk/index.css'//引入css
+// import 'element-ui/lib/theme-chalk/index.css'//引入css 
 // Vue.use(ElementUI)
 //按需引入
 import {
@@ -30,7 +32,7 @@ import {
   Container, Header, Aside, Main, Menu, Submenu, MenuItem, 
   Breadcrumb,BreadcrumbItem,Card,Row,Col,Table,TableColumn,
   Switch,Tooltip,Pagination,Dialog,MessageBox,Tag,Tree,
-  Option,
+  Option,Cascader,
 } from 'element-ui';
 Vue.use(Button)
 Vue.use(Select)
@@ -58,6 +60,7 @@ Vue.use(Dialog)
 Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Option)
+Vue.use(Cascader)
 
 //这个message需要全局挂载，$message自定义属性，可以改名字合法就行，
 //后面不能改，意思是把弹窗组件挂载到了Vue的原型对象上，这样每个组件都可以
@@ -65,6 +68,7 @@ Vue.use(Option)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm 
 
+Vue.component('tree-table',TreeTable)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
