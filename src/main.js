@@ -32,7 +32,7 @@ import {
   Container, Header, Aside, Main, Menu, Submenu, MenuItem, 
   Breadcrumb,BreadcrumbItem,Card,Row,Col,Table,TableColumn,
   Switch,Tooltip,Pagination,Dialog,MessageBox,Tag,Tree,
-  Option,Cascader,
+  Option,Cascader, Alert, TabPane,Tabs
 } from 'element-ui';
 Vue.use(Button)
 Vue.use(Select)
@@ -61,6 +61,9 @@ Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Option)
 Vue.use(Cascader)
+Vue.use(Alert)
+Vue.use(Tabs)
+Vue.use(TabPane)
 
 //这个message需要全局挂载，$message自定义属性，可以改名字合法就行，
 //后面不能改，意思是把弹窗组件挂载到了Vue的原型对象上，这样每个组件都可以
