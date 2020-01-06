@@ -338,3 +338,52 @@ el组件多选框组 加边框border即可
 下载lodash深拷贝
  
  ## 订单管理功能开发
+通过路由的方式将订单列表里的数据加载出来
+
+## 数据报表功能的开发
+下载安装echarts
+cnpm install echarts -S
+获取报表的数据并替换图表
+
+## 优化
+1. 进度条的展示
+npm install echarts -S
+在main.js中导入NProgress的JS(实现效果)和CSS(美化进度条)
+然后配置进度条
+什么时候配置呢？
+在main.js中利用axios包发起了Ajax请求，只要发起了请求。就会触发request这个拦截器，当请求完毕就会调用response的拦截器，因此可以基于拦截器展示和隐藏进度条的效果
+request显示，response隐藏
+2. build解决警告
+不允许出现console.log()
+利用babel-plugin-transfrom-remove-console插件移除console的使用
+在babel.config.js中配置下'transfrom-remove-console'即可，
+但是这个方法它是全局的，我现在想要只在发布时生效，开发时不生效该怎么办？
+新建一个空数组，判断现在是开发还是发布阶段mode值
+if(process.env.NODE_ENV === 'production'){
+    prodPlugins.push('transfrom-remove-console')
+}
+
+## 生成打包报告
+1. 通过vue-cli命令选项生成打包报告
+vue-cli-service build --report
+--report 选项可以生成report.html以帮助分析包内容
+2. 通过可视化UI面板直接查看报告
+
+## 通过vue.config.js修改webpack的默认配置
+
+## 为开发模式与发布模式指定不同的打包入口
+默认是共同的打包入口文件(src/main.js)
+1. 开发：src/main-dev.js
+2. 发布：src/main-prod.js
+方法：configureWebpack和chainWebpack都可以，
+前者是链式编程的形式修改，后者是通过操作对象的形式修改
+
+## 通过externals加载外部CDN资源
+## 通过CDN优化ElementUI的打包
+把element-ui中的组件，也通过CDN的形式来加载，进一步减小打包后的文件体积
+## 路由懒加载
+1. 安装@babel/plugin-syntax-dynamic-import插件
+2. 在babel.config.js配置文件中声明上插件
+3. 将路由改成懒加载的代码格式
+
+## 项目上线
