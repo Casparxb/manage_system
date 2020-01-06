@@ -76,6 +76,10 @@ Vue.use(Steps)
 Vue.use(Checkbox)
 Vue.use(Upload)
 
+import Timeline from './plugins/timeline/index.js'
+import TimelineItem from './plugins/timeline-item/index.js'
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 //这个message需要全局挂载，$message自定义属性，可以改名字合法就行，
 //后面不能改，意思是把弹窗组件挂载到了Vue的原型对象上，这样每个组件都可以
 //通过this访问到$message，进行弹框提示
